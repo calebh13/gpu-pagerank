@@ -5,11 +5,11 @@
 // If initial_capacity is not positive, then it is ignored
 MinHeap* MinHeap_init(size_t initial_capacity)
 {
-    MinHeap* heap = malloc(sizeof(MinHeap));
+    MinHeap* heap = (MinHeap*)malloc(sizeof(MinHeap));
     if (!heap) exit(EXIT_FAILURE);
     heap->cur_size = 0;
     heap->max_size = (initial_capacity > 0) ? initial_capacity : 8; // default val
-    heap->arr = calloc(heap->max_size + 1, sizeof(void*));
+    heap->arr = (void**)calloc(heap->max_size + 1, sizeof(void*));
     if (!heap->arr) exit(EXIT_FAILURE);
     return heap;
 }
@@ -18,7 +18,7 @@ void MinHeap_insert(MinHeap* heap, void* x, int (*cmp)(const void *, const void 
 {
     if (heap->cur_size == heap->max_size) {
         heap->max_size *= 2;
-        heap->arr = realloc(heap->arr, (heap->max_size + 1) * sizeof(void*));        
+        heap->arr = (void**)realloc(heap->arr, (heap->max_size + 1) * sizeof(void*));        
         if (!heap->arr) exit(EXIT_FAILURE);
     }
 

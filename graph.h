@@ -5,23 +5,25 @@
 #include <stdlib.h>
 
 typedef struct graph {
-    uint64_t* edges;
-    uint64_t* offsets;
-    uint64_t vertex_count;
-    uint64_t edge_count;
+    uint32_t* edges;
+    uint32_t* offsets;
+    uint32_t vertex_count;
+    uint32_t edge_count;
 } Graph;
 
 typedef struct pagerank {
-    uint64_t hits;
-    uint64_t idx;
+    uint32_t hits;
+    uint32_t idx;
 } Pagerank;
-  
-int parse_edge(const char* line, uint64_t* in_node, uint64_t* out_node);
+
+int parse_edge(const char* line, uint32_t* in_node, uint32_t* out_node);
 Graph* init_graph(FILE* file);
+void free_graph(Graph* g);
 Pagerank* init_pageranks(uint64_t vertex_count);
 int pagerank_cmp(const void* a, const void* b);
-void free_graph(Graph* g);
-void calculate_pageranks(Graph* G, Pagerank* pageranks,  double d, uint64_t k, int p);
+void calculate_pageranks(Graph* G, Pagerank* pageranks, const double D, const uint32_t K, int num_to_show); 
+
+extern const bool DEBUG;
 
 /* 
  * Instead of making a list of nodes, where each node has an adjacency list,
