@@ -149,8 +149,14 @@ void calculate_pageranks(Graph* G, Pagerank* pageranks, const double D, const ui
     srand((unsigned int)time(NULL));
     uint32_t seed = (uint32_t)rand();
     
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);
     monte_carlo_kernel<<<grid_size, block_size>>>(d_offsets, d_edges, d_counts, 
         G->vertex_count, K, (uint32_t)(D * UINT32_MAX), seed);
+    cudaDeviceSynchronize();
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    long long us = (long long)(end.tv_sec - start.tv_sec) * 1e6 + (long long)((end.tv_nsec - start.tv_nsec) / 1000);
+    printf("Kernel: %lld us\n", us);
     
     // Copy counts from GPU to host. We didn't send the GPU a Pagerank array to save memory (allows better caching)
     uint32_t* counts = (uint32_t*)malloc(G->vertex_count * sizeof(uint32_t));
