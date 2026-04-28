@@ -109,7 +109,7 @@ __global__ void monte_carlo_kernel(const uint32_t* __restrict__ d_offsets, const
             cur_node = rng % vertex_count;
         } else {
             rng = xorshift32(rng);
-            cur_node = __ldg(&d_edges[cur_node + rng % num_neighbors]);
+            cur_node = __ldg(&d_edges[start + rng % num_neighbors]);
         }
         
         atomicAdd(&d_counts[cur_node], 1u);
