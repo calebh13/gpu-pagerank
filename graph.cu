@@ -2,7 +2,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include <omp.h>
 #include <inttypes.h>
 #include <stdbool.h>
 #include <time.h>

@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <inttypes.h>
 #include <getopt.h>
-// #include <omp.h>
 #include <cuda.h>
 
 #include "graph.h"
